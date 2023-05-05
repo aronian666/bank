@@ -14,22 +14,12 @@
     ];
 </script>
 
-<div>
+<div style="width: 250px;">
     <h1>Agente</h1>
-    <section>
+    <section style="display: grid; grid-template-columns: 1fr 1fr">
         {#each inputs as { name, value }}
             <span>{name}</span>
             <span>{value}</span>
         {/each}
     </section>
 </div>
-
-<style>
-    div {
-        width: 250px;
-    }
-    section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-</style>
