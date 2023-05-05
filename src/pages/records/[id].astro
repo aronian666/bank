@@ -5,4 +5,4 @@ import Print from "./Print.svelte";
 const record = await Record.find({ id: "eq." + Astro.params.id });
 ---
 
-<Print {record} client:only />
+<Print {record} client:visible />
