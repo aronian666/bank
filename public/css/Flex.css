@@ -1,0 +1,37 @@
+.flex {
+    --gap: 0rem;
+    display: flex;
+    gap: var(--gap);
+}
+
+.flex.direction {
+    --d: column;
+    flex-direction: var(--d);
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+.flex.auto-fit>* {
+    --size1: 250px;
+    --size2: 50%;
+    --max1: calc(var(--size1) - var(--gap));
+    --max2: calc(var(--size2) - var(--gap));
+    flex: 1 1 max(var(--max1), var(--max2));
+}
+
+.flex.content,
+.grid.content {
+    place-content: var(--c, center);
+}
+
+.flex.items,
+.grid.items {
+    place-items: var(--i, center);
+}
+
+.flex.self,
+.grid.self {
+    place-self: var(--s, center);
+}

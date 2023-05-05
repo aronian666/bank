@@ -1,0 +1,47 @@
+---
+const { title } = Astro.props;
+---
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="stylesheet" href="/css/Index.css" />
+        <title>{title}</title>
+    </head>
+    <body class="flex">
+        <nav class="flex direction">
+            <a href="/">Inicio</a>
+            <a href="/rest">Por cobrar</a>
+            <a href="/days">Cobros</a>
+        </nav>
+        <main
+            style="padding: 1rem; gap: 1rem; flex: 1 1 100%"
+            class="flex direction"
+        >
+            <slot />
+        </main>
+    </body>
+</html>
+
+<style>
+    nav {
+        height: 100vh;
+        padding: 1rem;
+        width: 250px;
+        background-color: white;
+    }
+    body {
+        background-color: #f0f0f0;
+    }
+    a {
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    a:hover {
+        background-color: var(--color1);
+        color: white;
+    }
+</style>

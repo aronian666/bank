@@ -1,0 +1,50 @@
+a.button,
+button {
+    --color: linear-gradient(90deg, var(--color1), var(--color3));
+    padding: clamp(0.3rem, 2vw, 0.6rem) clamp(0.6rem, 2vw, 1.5rem);
+    border-radius: 0.25rem;
+    border: none;
+    background: var(--color);
+    color: white;
+    cursor: pointer;
+    transition: .2s;
+    text-decoration: none !important;
+    display: flex;
+    gap: 0.5rem;
+    place-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+button.icon {
+    padding: 0;
+    background: white;
+    color: black;
+    border: 1px solid black;
+}
+
+a.button.holed,
+button.holed {
+    box-shadow: inset 0 0 0 1px var(--color, var(--dark));
+    background: white;
+    color: var(--color, var(--dark));
+    transition-duration: .2s;
+}
+
+a.button.holed:hover,
+button.holed:hover {
+    background: var(--color, var(--dark));
+    color: white;
+    text-decoration: none;
+}
+
+a.button:hover,
+button:hover {
+    translate: 0 -.125rem;
+}
+
+a.button.disabled,
+button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

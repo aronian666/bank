@@ -1,0 +1,28 @@
+.animation {
+    --duration: 1s;
+    --name: breathing;
+    --count: infinite;
+    --direction: alternate;
+    --timing: ease;
+    animation: breathing var(--duration) var(--timing) 0s var(--count) var(--direction) both;
+}
+
+@keyframes breathing {
+    from {
+        translate: 0;
+    }
+
+    to {
+        translate: 0 -2rem;
+    }
+}
+
+@keyframes rotate {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}

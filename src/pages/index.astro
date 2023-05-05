@@ -1,0 +1,15 @@
+---
+import Records from "./Records.svelte";
+import { Record } from "../tables";
+import { Filter } from "../components";
+import Layout from "../layouts/Layout.astro";
+let filter = Record.getFilterOptions(Astro.url.searchParams);
+const response = await Record.filter(filter, { perPage: 10 })!;
+---
+
+<Layout title="Inicio">
+	<section class="panel grid" style="gap: 1rem">
+		<Filter {filter} types={Record.types} objectName="filter" client:only />
+		<Records client:only records={response.data} />
+	</section>
+</Layout>

@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Record } from "../../tables";
+import Close from "./Close.svelte";
+/* const { data, count } = await Record.filter(
+    { match: [{ key: "day_id", value: "is.null" }] },
+    { perPage: 1000, select: "value, id" }
+); */
+---
+
+<Layout title="Operaciones sin archivar">
+    <Close client:only />
+</Layout>

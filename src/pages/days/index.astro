@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Day } from "../../tables";
+import Days from "./Days.svelte";
+const { data, count } = await Day.filter();
+---
+
+<Layout title="Dias">
+    <h1>Cobros</h1>
+    <section class="panel grid">
+        <Days days={data} />
+    </section>
+</Layout>
