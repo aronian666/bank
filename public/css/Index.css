@@ -57,3 +57,16 @@ svg,
 img {
     width: 100%;
 }
+
+
+@media print {
+    body {
+        visibility: hidden;
+    }
+    #print {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

@@ -41,32 +41,57 @@ export default class Record extends ActiveRecord {
     }
     static searchProperties = ["method", "others", "type"]
     static async updateRecords() {
-        console.log("entro")
+        console.log("raton")
         const response = await fetch(
             "https://script.google.com/macros/s/AKfycbxJozKHD_MiWlf4zMRXZyT-4aXf0Ndfs1Q3pYxgAPifg0uIrsYTB9sQApN_LcVsIzeVsA/exec"
         );
         const data = await response.json();
-        const records = [data[0]].map(({ body, ...rest }) => {
-            return { ...this.#bcp(body), ...rest }
+        const records = data.slice(0, 2).map(({ body, subject, ...rest }) => {
+            return { ...this.#bcp(body, subject), subject, ...rest }
         })
-        console.log(records[0])
-        const algo = await this.upsert([records[0]])
-
-        //const algo = await this.upsert(records)
+        const algo = await this.upsert(records)
+        console.log(algo)
     }
-    static #bcp(body) {
-        const data = [...body.matchAll(/<b>(.+)<\/b>/g)].map(([_, data]) => data)
-        const type = data[1]
-        const operation = data[2]
-        const business = data[4]
-        const service = data[5]
-        const client = data[6]
-        const code = data[7]
-        const total = data[8].slice(2, data[8].length) // cortarlo
-        const value = data[11].slice(2, data[12].length)
-        const fixed = data[12].slice(2, data[12].length)
-        const blackberry = data[13].slice(2, data[13].length)
-        return { type, operation, business, service, client, code, total, value, fixed, blackberry }
+    static #bcp(body, subject) {
+        if (subject === "Fwd: Envío Automático - Constancia de Transferencia - Banca Móvil BCP") {
+            const data = [...body.matchAll(/<b>(.+)<\/b>/g)].map(([_, data]) => data)
+            const type = "Deposito"
+            const operation = data[2]
+            const code = data[4] + data[5]
+            const client = data[6]
+            const value = parseFloat(data[10].slice(2, data[10].length))
+            let commission = 0.5
+            if (value >= 300) commission = 1
+            if (value >= 1000) commission = 2
+
+            return { type, code, client, value, operation, commission }
+        } else if (subject = "Fwd: Envío Automático - Constancia de Giros Nacionales - BCP") {
+            const data = [...body.matchAll(/<\/span>(.+)<\/td>/g)].map(([_, data]) => data)
+            const operation = data[2]
+            const client = data[4]
+            console.log(data)
+            const code = data[5]
+            const type = "Giro nacional"
+            const value = data[6].slice(2, data[6].length)
+            const commission = parseFloat(data[7].slice(2, data[7].length)) + 1
+            return { operation, client, code, commission, type, value }
+        }
+        else if (subject === "asdf") {
+            const type = data[1] // Tipo de operacion
+            const operation = data[2] // codigo de operacion
+            const business = data[4] // Empresa
+            const service = data[5] // Servicio
+            const client = data[6] // Cliente
+            const code = data[7] // Datos de la tarjeta
+            const total = data[8].slice(2, data[8].length) // cortarlo
+            const value = data[11].slice(2, data[12].length)
+            const fixed = data[12].slice(2, data[12].length)
+            const blackberry = data[13].slice(2, data[13].length)
+            const commission = 1
+            return { commission, type, operation, business, service, client, code, total, value, fixed, blackberry }
+        }
+        return {}
+
     }
     static #interbank(body = "") {
         const code = /<span>([0-9]+)<\/span>/g

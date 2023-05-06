@@ -1,8 +1,24 @@
 ---
 import { Record } from "../../tables";
 import Print from "./Print.svelte";
-
 const record = await Record.find({ id: "eq." + Astro.params.id });
 ---
 
-<Print {record} client:visible />
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="stylesheet" href="/css/Index.css" />
+        <title>Comprovante</title>
+    </head>
+    <body class="flex">
+        <main
+            style="padding: 1rem; gap: 1rem; flex: 1 1 100%"
+            class="flex direction"
+        >
+            <Print record={record} />
+        </main>
+    </body>
+</html>
